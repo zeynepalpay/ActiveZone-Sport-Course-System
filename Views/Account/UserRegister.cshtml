@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Kullanıcı Kayıt";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow border-0">
+            <div class="card-header bg-success text-white text-center">
+                <h4 class="mb-0">Kayıt Ol</h4>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Error</div>
+                }
+
+                <form asp-action="UserRegister" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label">Ad Soyad</label>
+                        <input type="text" name="fullName" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Kullanıcı Adı</label>
+                        <input type="text" name="userName" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Şifre</label>
+                        <input type="password" name="password" class="form-control" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Kayıt Ol</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-action="UserLogin">Zaten hesabım var, giriş yap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

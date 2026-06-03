@@ -251,3 +251,5 @@ C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSys
 C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSystem\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSystem\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSystem\bin\Debug\net8.0\announcements.json
+C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSystem\obj\Debug\net8.0\SportCourseRegistrationSystem.sourcelink.json
+C:\Users\ZEYNEP\Desktop\SportCourseRegistrationSystem\SportCourseRegistrationSystem\bin\Debug\net8.0\useraccounts.json

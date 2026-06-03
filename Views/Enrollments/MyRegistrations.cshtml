@@ -1,0 +1,42 @@
+@model IEnumerable<SportCourseRegistrationSystem.Models.Enrollment>
+
+@{
+    ViewData["Title"] = "Kayıtlarım";
+}
+
+<h2 class="text-success fw-bold mb-4">Kayıtlarım</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Henüz kayıt olduğunuz bir kurs bulunmamaktadır.
+    </div>
+}
+else
+{
+    <div class="card shadow border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Kurs</th>
+                        <th>Eğitmen</th>
+                        <th>Kayıt Tarihi</th>
+                        <th>Üye Kodu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.SportCourse?.CourseName</td>
+                            <td>@item.SportCourse?.InstructorName</td>
+                            <td>@item.EnrollmentDate.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>@item.Member?.MemberNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

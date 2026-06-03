@@ -34,13 +34,19 @@ namespace SportCourseRegistrationSystem.Controllers
         // GET: /Enrollments/Register?courseId=X
         // Kayıt formunu açar ve seçilen kursun bilgilerini taşır
         public async Task<IActionResult> Register(int courseId)
-        {
-            var course = await _context.SportCourses.FindAsync(courseId);
-            
-            if (course == null)
-            {
-                return NotFound("Kurs bulunamadı.");
-            }
+{
+    if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+    {
+        return RedirectToAction("UserLogin", "Account");
+    }
+
+    var course = await _context.SportCourses.FindAsync(courseId);
+
+    if (course == null)
+    {
+        return NotFound("Kurs bulunamadı.");
+    }
+
 
             // Kontenjan kontrolü
             if (course.Capacity <= 0)
@@ -157,7 +163,24 @@ namespace SportCourseRegistrationSystem.Controllers
             }
             return View();
         }
+        public async Task<IActionResult> MyRegistrations()
+{
+    var userName = HttpContext.Session.GetString("UserName");
 
+    if (string.IsNullOrEmpty(userName))
+    {
+        return RedirectToAction("UserLogin", "Account");
+    }
+
+    var myEnrollments = await _context.Enrollments
+        .Include(e => e.Member)
+        .Include(e => e.SportCourse)
+        .Where(e => e.Member != null && e.Member.FullName == userName)
+        .OrderByDescending(e => e.EnrollmentDate)
+        .ToListAsync();
+
+    return View(myEnrollments);
+}
         // POST: /Enrollments/CancelEnrollment
         // Kayıt iptal etme ve kontenjanı 1 geri artırma işlemi
         [HttpPost]

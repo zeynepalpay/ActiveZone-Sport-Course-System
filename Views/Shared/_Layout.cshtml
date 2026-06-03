@@ -37,39 +37,98 @@
         </li>
     </ul>
 
-    <ul class="navbar-nav ms-auto gap-2 align-items-center">
-        @if (HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true")
-        {
-            <li class="nav-item">
-                <a class="btn btn-outline-warning btn-sm fw-bold px-3 text-white" asp-area="" asp-controller="Announcements" asp-action="Manage">
-                    <i class="bi bi-megaphone-fill me-1"></i>Duyuru Paneli
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-outline-success btn-sm fw-bold px-3 text-white" asp-area="" asp-controller="Enrollments" asp-action="Index">
-                    <i class="bi bi-clipboard-data me-1"></i>Kayıt Takip Paneli
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-outline-warning btn-sm fw-bold px-3 text-dark bg-warning" asp-area="" asp-controller="SportCourses" asp-action="Index">
-                    <i class="bi bi-sliders me-1"></i>Kurs Tanımlama
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-danger btn-sm fw-bold px-3 text-white" asp-area="" asp-controller="Account" asp-action="Logout">
-                    <i class="bi bi-box-arrow-right me-1"></i>Çıkış Yap
-                </a>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="btn btn-outline-light btn-sm fw-bold px-3 text-white" asp-area="" asp-controller="Account" asp-action="Login">
-                    <i class="bi bi-person-lock me-1"></i>Yönetici Girişi
-                </a>
-            </li>
-        }
-    </ul>
+<ul class="navbar-nav ms-auto gap-2 align-items-center">
+
+@if (HttpContextAccessor.HttpContext?.Session?.GetString("IsAdmin") == "true")
+{
+    <li class="nav-item">
+        <a class="btn btn-outline-warning btn-sm fw-bold px-3 text-white"
+           asp-controller="Announcements" asp-action="Manage">
+            Duyuru Paneli
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-outline-success btn-sm fw-bold px-3 text-white"
+           asp-controller="Enrollments" asp-action="Index">
+            Kayıt Takip Paneli
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-warning btn-sm fw-bold px-3 text-dark"
+           asp-controller="SportCourses" asp-action="Index">
+            Kurs Tanımlama
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-danger btn-sm fw-bold px-3"
+           asp-controller="Account" asp-action="Logout">
+            Çıkış Yap
+        </a>
+    </li>
+}
+else if (Context.Session.GetString("UserName") != null)
+{
+    <li class="nav-item">
+        <span class="navbar-text text-white fw-bold me-2">
+            Hoş Geldin, @Context.Session.GetString("UserName")
+        </span>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-outline-info btn-sm fw-bold px-3 text-white"
+           asp-controller="Enrollments"
+           asp-action="MyRegistrations">
+            <i class="bi bi-list-check me-1"></i>Kayıtlarım
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-danger btn-sm fw-bold px-3 text-white"
+           asp-controller="Account"
+           asp-action="UserLogout">
+            <i class="bi bi-box-arrow-right me-1"></i>Çıkış Yap
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-outline-warning btn-sm fw-bold px-3"
+           asp-controller="Account"
+           asp-action="Login">
+            Yönetici Girişi
+        </a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="btn btn-outline-light btn-sm fw-bold px-3 text-white"
+           asp-controller="Account"
+           asp-action="UserLogin">
+            Giriş Yap
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-success btn-sm fw-bold px-3 text-white"
+           asp-controller="Account"
+           asp-action="UserRegister">
+            Kayıt Ol
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="btn btn-outline-warning btn-sm fw-bold px-3"
+           asp-controller="Account"
+           asp-action="Login">
+            Yönetici Girişi
+        </a>
+    </li>
+}
+
+</ul>
 </div>
             </div>
         </nav>
