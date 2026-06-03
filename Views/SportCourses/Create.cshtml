@@ -1,0 +1,58 @@
+@model SportCourseRegistrationSystem.Models.SportCourse
+
+@{
+    ViewData["Title"] = "ActiveZone - Yeni Kurs Tanımla";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-dark text-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-plus-circle-fill text-success me-2"></i>Yeni Spor Kursu Ekle</h4>
+            </div>
+            
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="CourseName" class="form-label fw-semibold text-secondary"></label>
+                        <input asp-for="CourseName" class="form-control form-control-lg" placeholder="Örn: Crossfit, Pilates, Yoga" />
+                        <span asp-validation-for="CourseName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="InstructorName" class="form-label fw-semibold text-secondary"></label>
+                        <input asp-for="InstructorName" class="form-control" placeholder="Eğitmenin adını ve soyadını giriniz" />
+                        <span asp-validation-for="InstructorName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Capacity" class="form-label fw-semibold text-secondary"></label>
+                            <input asp-for="Capacity" type="number" class="form-control" placeholder="Maks. Kişi Sayısı" />
+                            <span asp-validation-for="Capacity" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DurationWeeks" class="form-label fw-semibold text-secondary"></label>
+                            <input asp-for="DurationWeeks" type="number" class="form-control" placeholder="Hafta Süresi" />
+                            <span asp-validation-for="DurationWeeks" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-success btn-lg shadow-sm fw-bold">Kursu Sisteme Tanımla</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">İptal Et ve Listeye Dön</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

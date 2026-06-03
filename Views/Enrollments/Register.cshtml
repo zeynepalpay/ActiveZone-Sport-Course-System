@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "ActiveZone - Kurs Kayıt Formu";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-success text-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2"></i>ActiveZone Kurs Kayıt Formu</h4>
+            </div>
+            
+            <div class="card-body p-4">
+                <form asp-action="Register" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Kayıt Olunacak Branş / Kurs</label>
+                        <select name="courseId" class="form-select bg-light fw-bold text-primary" required>
+                            <option value="@ViewBag.CourseId" selected>@ViewBag.CourseName (Eğitmen: @ViewBag.InstructorName)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Adınız Soyadınız</label>
+                        <input type="text" name="fullName" class="form-control" placeholder="Adınızı ve soyadınızı giriniz" required />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-secondary">Doğum Tarihi</label>
+                            <input type="date" 
+                                   name="birthDate" 
+                                   class="form-control" 
+                                   max="@DateTime.Now.ToString("yyyy-MM-dd")" 
+                                   required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-secondary">İletişim Numarası</label>
+                            <input type="text" 
+                                   name="phone" 
+                                   class="form-control" 
+                                   maxlength="11" 
+                                   placeholder="05xxxxxxxxx" 
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+                                   required />
+                            <span class="text-muted small d-block mt-1" style="font-size: 0.8rem;">Başında sıfır olacak şekilde 11 hane giriniz.</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary">Sağlık Durumu / Kronik Rahatsızlık</label>
+                        <select name="healthStatus" class="form-select" required>
+                            <option value="" disabled selected>Lütfen sağlık durumunuzu seçiniz...</option>
+                            <option value="Sağlık Sorunu Yok">Sağlık Sorunu Yok</option>
+                            <option value="Astım">Astım</option>
+                            <option value="Kalp Rahatsızlığı">Kalp Rahatsızlığı</option>
+                            <option value="Tansiyon">Tansiyon</option>
+                            <option value="Diyabet">Diyabet</option>
+                            <option value="Ortopedik Problem">Ortopedik Problem</option>
+                            <option value="Diğer">Diğer</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm">Kayıt İşlemini Tamamla</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">Vitrini İncelemeye Dön</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

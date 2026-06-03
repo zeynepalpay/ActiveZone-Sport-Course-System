@@ -1,0 +1,55 @@
+@model SportCourseRegistrationSystem.Models.SportCourse
+
+@{
+    ViewData["Title"] = "ActiveZone - Kurs Düzenle";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2"></i>Kurs Bilgilerini Güncelle</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    <input type="hidden" asp-for="Id" />
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="CourseName" class="form-label fw-semibold text-secondary">Kurs Branşı</label>
+                        <input asp-for="CourseName" class="form-control" required />
+                        <span asp-validation-for="CourseName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="InstructorName" class="form-label fw-semibold text-secondary">Eğitmen Adı Soyadı</label>
+                        <input asp-for="InstructorName" class="form-control" required />
+                        <span asp-validation-for="InstructorName" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Capacity" class="form-label fw-semibold text-secondary">Maksimum Kontenjan</label>
+                            <input asp-for="Capacity" type="number" class="form-control" min="1" required />
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DurationWeeks" class="form-label fw-semibold text-secondary">Kurs Süresi (Hafta)</label>
+                            <input asp-for="DurationWeeks" type="number" class="form-control" min="1" required />
+                            <span asp-validation-for="DurationWeeks" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm">Değişiklikleri Kaydet</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">Listeye Geri Dön</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

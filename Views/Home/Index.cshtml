@@ -1,0 +1,125 @@
+﻿@model IEnumerable<SportCourseRegistrationSystem.Models.SportCourse>
+
+@{
+    ViewData["Title"] = "ActiveZone - Ana Vitrin";
+}
+
+<div class="text-center my-4 p-5 bg-dark text-white rounded shadow-sm">
+    <h1 class="display-4 fw-bold text-success">ActiveZone Fitness & Wellness</h1>
+    <p class="lead text-light opacity-75">Hedeflerinize ulaşmak için en doğru branşı seçin ve uzman eğitmenlerimizle hemen başlayın!</p>
+    
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <form asp-action="Index" method="get" class="d-flex gap-2">
+                <input type="text" name="searchString" class="form-control form-control-lg border-0 shadow-sm" 
+                       placeholder="Kurs branşı ara (Örn: Yoga)..." value="@ViewData["CurrentFilter"]" />
+                <button type="submit" class="btn btn-success btn-lg px-4 shadow-sm">
+                    <i class="bi bi-search"></i> Ara
+                </button>
+                @if (ViewData["CurrentFilter"] != null)
+                {
+                    <a asp-action="Index" class="btn btn-outline-light btn-lg">Temizle</a>
+                }
+            </form>
+        </div>
+    </div>
+</div>
+
+<h3 class="fw-bold text-secondary mb-4"><i class="bi bi-fire text-danger me-2"></i>Aktif Spor Kurslarımız</h3>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="col-12 text-center my-5">
+            <div class="alert alert-warning py-4 shadow-sm border-0" role="alert">
+                <i class="bi bi-exclamation-triangle-fill display-6 d-block mb-2 text-warning"></i>
+                <span class="fw-bold">Aradığınız kriterlere uygun aktif bir spor kursu bulunamadı.</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            // C# Kod Bloğu: Kurs adına göre klasörden doğru resmi seçer
+            string imagePath = "/images/default.jpg";
+            
+            if (item.CourseName != null && item.CourseName.ToLower().Contains("yoga"))
+            {
+                imagePath = "/images/yoga.jpg";
+            }
+            else if (item.CourseName != null && (item.CourseName.ToLower().Contains("fitness") || item.CourseName.ToLower().Contains("body")))
+            {
+                imagePath = "/images/fitness.jpg";
+            }
+            else if (item.CourseName != null && item.CourseName.ToLower().Contains("yüzme"))
+            {
+                imagePath = "/images/yuzme.jpg";
+            }
+            else if (item.CourseName != null && item.CourseName.ToLower().Contains("pilates"))
+            {
+                imagePath = "/images/pilates.jpg";
+            }
+
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden hover-shadow transition">
+                    
+                    <img src="@imagePath" class="card-img-top" alt="@item.CourseName" style="height: 200px; object-fit: cover;" />
+                    
+                    <div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="card-title fw-bold text-dark mb-0">@item.CourseName</h4>
+        <span class="badge bg-light text-dark border fw-bold px-2 py-1">
+            <i class="bi bi-clock-history me-1 text-primary"></i>@item.DurationWeeks Hafta
+        </span>
+    </div>
+    
+    <p class="text-secondary mb-2">
+        <i class="bi bi-person-badge me-2 text-success"></i><strong>Eğitmen:</strong> @item.InstructorName
+    </p>
+    
+    <p class="text-secondary mb-2">
+        <i class="bi bi-people me-2 text-info"></i><strong>Mevcut Kontenjan:</strong> 
+        <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">@item.Capacity Kişi</span>
+    </p>
+
+    @{
+        int calculatedPrice = item.DurationWeeks * 400;
+    }
+    <p class="text-secondary mb-0 d-flex align-items-center">
+        <i class="bi bi-wallet2 me-2 text-warning"></i><strong>Kurs Ücreti:</strong>
+        <span class="badge bg-warning text-dark fw-bold ms-2 px-2 py-1">@calculatedPrice.ToString("N0") TL</span>
+        <span class="text-muted ms-2" style="font-size: 0.75rem;">(@item.DurationWeeks Hafta )</span>
+    </p>
+</div>
+                    
+                    <div class="card-footer bg-white border-0 p-4 pt-0">
+                        @if (item.Capacity > 0)
+                        {
+                            <a asp-controller="Enrollments" asp-action="Register" asp-route-courseId="@item.Id" 
+                               class="btn btn-outline-success w-100 fw-bold py-2 shadow-sm">
+                               <i class="bi bi-pencil-square me-1"></i>Hemen Kayıt Ol
+                            </a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary w-100 fw-bold py-2" disabled>
+                                 <i class="bi bi-x-circle me-1"></i> Kontenjan Dolu
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<style>
+    .hover-shadow:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1.5rem rgba(0,0,0,.15)!important;
+    }
+    .transition {
+        transition: all 0.3s ease-in-out;
+    }
+</style>
